@@ -1,30 +1,32 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import arch1 from "@/assets/architecture-1.jpg";
 import arch2 from "@/assets/architecture-2.jpg";
 import arch3 from "@/assets/architecture-3.jpg";
 
-const slides = [
-  {
-    image: arch1,
-    title: "Modern Commercial Spaces",
-    description: "Innovative designs for contemporary business environments"
-  },
-  {
-    image: arch2,
-    title: "Residential Excellence",
-    description: "Creating homes that blend aesthetics with functionality"
-  },
-  {
-    image: arch3,
-    title: "Interior Architecture",
-    description: "Thoughtful spaces that inspire and delight"
-  }
-];
-
 const ImageSlideshow = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useLanguage();
+
+  const slides = [
+    {
+      image: arch1,
+      title: t('hero.title1'),
+      description: t('hero.desc1'),
+    },
+    {
+      image: arch2,
+      title: t('hero.title2'),
+      description: t('hero.desc2'),
+    },
+    {
+      image: arch3,
+      title: t('hero.title3'),
+      description: t('hero.desc3'),
+    },
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,7 +34,7 @@ const ImageSlideshow = () => {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
@@ -66,13 +68,16 @@ const ImageSlideshow = () => {
 
       <div className="absolute inset-0 flex items-end justify-center pb-32">
         <div className="w-full max-w-4xl px-6 text-center animate-fade-in">
-          <div className="mb-8 rounded-2xl border border-white/20 bg-white/70 backdrop-blur-glass p-8 shadow-xl">
-            <h2 className="mb-3 text-4xl font-light tracking-tight text-foreground">
-              {slides[currentSlide].title}
-            </h2>
-            <p className="text-lg font-light text-muted-foreground">
-              {slides[currentSlide].description}
-            </p>
+          <div className="mb-8 rounded-2xl border-2 border-white/30 bg-white/40 backdrop-blur-[30px] shadow-[0_8px_32px_0_rgba(0,0,0,0.12)] p-8 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-white/20 pointer-events-none" />
+            <div className="relative">
+              <h2 className="mb-3 text-4xl font-light tracking-tight text-foreground">
+                {slides[currentSlide].title}
+              </h2>
+              <p className="text-lg font-light text-muted-foreground">
+                {slides[currentSlide].description}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -82,7 +87,7 @@ const ImageSlideshow = () => {
           variant="ghost"
           size="icon"
           onClick={goToPrevious}
-          className="h-12 w-12 rounded-full border border-white/20 bg-white/70 backdrop-blur-glass hover:bg-white/90"
+          className="h-12 w-12 rounded-full border-2 border-white/30 bg-white/40 backdrop-blur-[20px] hover:bg-white/50 transition-all shadow-[0_4px_16px_0_rgba(0,0,0,0.1)]"
         >
           <ChevronLeft className="h-6 w-6" />
         </Button>
@@ -90,7 +95,7 @@ const ImageSlideshow = () => {
           variant="ghost"
           size="icon"
           onClick={goToNext}
-          className="h-12 w-12 rounded-full border border-white/20 bg-white/70 backdrop-blur-glass hover:bg-white/90"
+          className="h-12 w-12 rounded-full border-2 border-white/30 bg-white/40 backdrop-blur-[20px] hover:bg-white/50 transition-all shadow-[0_4px_16px_0_rgba(0,0,0,0.1)]"
         >
           <ChevronRight className="h-6 w-6" />
         </Button>
